@@ -4,11 +4,8 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "dev:isr": "astro dev --config astro.config.mjs",
-    "build": "astro build --config astro.config.production.mjs",
-    "build:isr": "astro build --config astro.config.mjs",
+    "build": "astro build --config astro.config.mjs",
     "preview": "astro preview",
-    "preview:isr": "astro preview --config astro.config.mjs",
     "astro": "astro"
   },
   "dependencies": {
