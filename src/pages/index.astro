@@ -1,11 +1,87 @@
 ---
-import Welcome from '../components/Welcome.astro';
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/Layout.astro";
+import PortfolioList from "../components/PortfolioList.astro";
 
-// Welcome to Astro! Wondering what to do next? Check out the Astro documentation at https://docs.astro.build
-// Don't want to use any of this? Delete everything in this file, the `assets`, `components`, and `layouts` directories, and start fresh.
+// ISR Configuration - On-demand revalidation
+export const prerender = false; // Enable server-side rendering
+
+// ISR Cache Management
+const CACHE_DURATION = 5 * 60 * 1000; // 5 minutes in milliseconds
+const STALE_WHILE_REVALIDATE = 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+
+// Set ISR cache headers for on-demand revalidation
+const cacheAge = Math.floor(CACHE_DURATION / 1000); // Convert to seconds
+const staleAge = Math.floor(STALE_WHILE_REVALIDATE / 1000); // Convert to seconds
+
+// Configure response headers for ISR
+Astro.response.headers.set(
+	"Cache-Control",
+	`public, s-maxage=${cacheAge}, stale-while-revalidate=${staleAge}`,
+);
+Astro.response.headers.set("CDN-Cache-Control", `public, s-maxage=${cacheAge}`);
+Astro.response.headers.set("Vary", "Accept-Encoding");
+
+// Add timestamp for debugging
+const buildTime = new Date().toISOString();
+Astro.response.headers.set("X-Build-Time", buildTime);
 ---
 
 <Layout>
-	<Welcome />
+	<main>
+		<header>
+			<h1>AC/JR</h1>
+		</header>
+
+		<PortfolioList pageSize={6} showDescription={true} showTags={true} />
+	</main>
 </Layout>
+
+<style>
+	main {
+		margin: auto;
+		padding: 1rem;
+		width: 100%;
+		max-width: calc(100% - 2rem);
+		color: #333;
+		font-size: 20px;
+		line-height: 1.6;
+	}
+
+	header {
+		text-align: center;
+		padding: 2rem 0;
+		margin-bottom: 2rem;
+		border-bottom: 1px solid #eee;
+	}
+
+	h1 {
+		margin: 0;
+		font-size: 3rem;
+		font-weight: 700;
+		line-height: 1;
+		color: #2563eb;
+	}
+
+	header p {
+		margin-top: 1rem;
+		color: #666;
+		font-size: 1.25rem;
+	}
+
+	header small {
+		display: block;
+		margin-top: 0.5rem;
+		font-size: 0.875rem;
+		color: #999;
+	}
+
+	@media (max-width: 768px) {
+		h1 {
+			font-size: 2rem;
+		}
+
+		header p {
+			font-size: 1rem;
+		}
+	}
+</style>

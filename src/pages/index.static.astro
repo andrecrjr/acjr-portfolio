@@ -1,0 +1,62 @@
+---
+import Layout from "../layouts/Layout.astro";
+import PortfolioList from "../components/PortfolioList.astro";
+
+// Static build configuration - this will be pre-rendered at build time
+export const prerender = true;
+---
+
+<Layout>
+    <main>
+        <header>
+            <h1>ACJR Hub</h1>
+            <p>Welcome to my personal portfolio powered by Notion</p>
+        </header>
+
+        <PortfolioList pageSize={6} showDescription={true} showTags={true} />
+    </main>
+</Layout>
+
+<style>
+    main {
+        margin: auto;
+        padding: 1rem;
+        width: 100%;
+        max-width: calc(100% - 2rem);
+        color: #333;
+        font-size: 20px;
+        line-height: 1.6;
+    }
+
+    header {
+        text-align: center;
+        padding: 2rem 0;
+        margin-bottom: 2rem;
+        border-bottom: 1px solid #eee;
+    }
+
+    h1 {
+        margin: 0;
+        font-size: 3rem;
+        font-weight: 700;
+        line-height: 1;
+        color: #2563eb;
+    }
+
+    header p {
+        margin-top: 1rem;
+        color: #666;
+        font-size: 1.25rem;
+    }
+
+    @media (max-width: 768px) {
+        h1 {
+            font-size: 2rem;
+        }
+
+        header p {
+            font-size: 1rem;
+        }
+    }
+</style>
+
