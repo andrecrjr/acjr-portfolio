@@ -1,0 +1,21 @@
+{
+    "name": "ACJR Hub - André Carlos Junior Portfolio",
+    "short_name": "ACJR Hub",
+    "description": "Portfolio website showcasing front-end development projects by André Carlos Junior",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#2563eb",
+    "icons": [
+        {
+            "src": "/apple-touch-icon.png",
+            "sizes": "180x180",
+            "type": "image/png"
+        },
+        {
+            "src": "/favicon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml"
+        }
+    ]
+}

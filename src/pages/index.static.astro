@@ -6,17 +6,6 @@ import PortfolioList from "../components/PortfolioList.astro";
 export const prerender = true;
 ---
 
-<Layout>
-    <main>
-        <header>
-            <h1>ACJR Hub</h1>
-            <p>Welcome to my personal portfolio powered by Notion</p>
-        </header>
-
-        <PortfolioList pageSize={6} showDescription={true} showTags={true} />
-    </main>
-</Layout>
-
 <style>
     main {
         margin: auto;
@@ -60,3 +49,13 @@ export const prerender = true;
     }
 </style>
 
+<Layout>
+    <main>
+        <header>
+            <h1>ACJR Hub</h1>
+            <p>Welcome to my personal portfolio powered by Notion</p>
+        </header>
+
+        <PortfolioList pageSize={6} showDescription={true} showTags={true} />
+    </main>
+</Layout>

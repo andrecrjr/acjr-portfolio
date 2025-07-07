@@ -24,12 +24,57 @@ Astro.response.headers.set("Vary", "Accept-Encoding");
 // Add timestamp for debugging
 const buildTime = new Date().toISOString();
 Astro.response.headers.set("X-Build-Time", buildTime);
+
+// SEO Configuration
+const seoConfig = {
+	title: "André Carlos Junior Portfolio - ACJR Hub",
+	description:
+		"Explore André Carlos Junior's portfolio showcasing innovative front-end development projects, modern web applications, and cutting-edge UI/UX designs. Discover expertise in React, JavaScript, TypeScript, and modern web technologies.",
+	keywords:
+		"André Carlos Junior, ACJR, portfolio, front-end developer, web developer, software engineer, React, JavaScript, TypeScript, web development, UI/UX design, full-stack developer",
+	author: "André Carlos Junior",
+	ogImage: "/og-image.jpg",
+	ogType: "website",
+	twitterHandle: "@acjr", // Update with your actual Twitter handle
+	structuredData: {
+		"@context": "https://schema.org",
+		"@type": "Person",
+		name: "André Carlos Junior",
+		jobTitle: "Front-End Software Engineer",
+		url: Astro.url.toString(),
+		sameAs: [
+			"https://github.com/andrecrjr",
+			"https://linkedin.com/in/andrecrjr",
+		],
+		knowsAbout: [
+			"JavaScript",
+			"TypeScript",
+			"React",
+			"Astro",
+			"Node.js",
+			"Front-end Development",
+			"Web Development",
+			"UI/UX Design",
+			"Software Architecture",
+		],
+		description:
+			"Experienced front-end software engineer specializing in modern web technologies and user experience design.",
+		worksFor: {
+			"@type": "Organization",
+			name: "ACJR Hub",
+		},
+	},
+};
 ---
 
-<Layout>
+<Layout {...seoConfig}>
 	<main>
 		<header>
 			<h1>AC/JR</h1>
+			<p>Front-End Software Engineer</p>
+			<small
+				>Building modern web experiences with passion and precision</small
+			>
 		</header>
 
 		<PortfolioList pageSize={6} showDescription={true} showTags={true} />

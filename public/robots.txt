@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://acjr.com/sitemap.xml
+
+# Block access to sensitive files
+Disallow: /api/
+Disallow: /.well-known/
+Disallow: /admin/
+Disallow: /private/
+
+# Optimize crawl budget
+Crawl-delay: 1 
