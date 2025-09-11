@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import PortfolioList from "../components/PortfolioList.astro";
+import PortfolioCard from "../components/PortfolioCard.astro";
 
 // ISR Configuration - On-demand revalidation
 export const prerender = false; // Enable server-side rendering
@@ -27,7 +27,7 @@ Astro.response.headers.set("X-Build-Time", buildTime);
 
 // SEO Configuration
 const seoConfig = {
-	title: "André Carlos Junior Portfolio - ACJR Hub",
+	title: "Portfolio - André Carlos Junior - ACJR Hub",
 	description:
 		"Explore André Carlos Junior's portfolio showcasing innovative front-end development projects, modern web applications, and cutting-edge UI/UX designs. Discover expertise in React, JavaScript, TypeScript, and modern web technologies.",
 	keywords:
@@ -35,7 +35,7 @@ const seoConfig = {
 	author: "André Carlos Junior",
 	ogImage: "/og-image.jpg",
 	ogType: "website",
-	twitterHandle: "@acjr", // Update with your actual Twitter handle
+	twitterHandle: "@acjr",
 	structuredData: {
 		"@context": "https://schema.org",
 		"@type": "Person",
@@ -68,65 +68,24 @@ const seoConfig = {
 ---
 
 <Layout {...seoConfig}>
-	<main>
-		<header>
-			<h1>AC/JR</h1>
-			<p>Front-End Software Engineer</p>
-			<small
-				>Building modern web experiences with passion and precision</small
-			>
-		</header>
-
-		<PortfolioList pageSize={6} showDescription={true} showTags={true} />
-	</main>
+	<PortfolioCard pageSize={10} />
 </Layout>
 
 <style>
-	main {
-		margin: auto;
-		padding: 1rem;
-		width: 100%;
-		max-width: calc(100% - 2rem);
-		color: #333;
-		font-size: 20px;
-		line-height: 1.6;
-	}
-
-	header {
-		text-align: center;
-		padding: 2rem 0;
-		margin-bottom: 2rem;
-		border-bottom: 1px solid #eee;
-	}
-
-	h1 {
+	/* Reset default layout styles for full-screen design */
+	:global(html, body) {
 		margin: 0;
-		font-size: 3rem;
-		font-weight: 700;
-		line-height: 1;
-		color: #2563eb;
+		padding: 0;
+		box-sizing: border-box;
 	}
 
-	header p {
-		margin-top: 1rem;
-		color: #666;
-		font-size: 1.25rem;
+	:global(body) {
+		font-family: 'Anonymous Pro', 'Courier New', monospace;
 	}
 
-	header small {
-		display: block;
-		margin-top: 0.5rem;
-		font-size: 0.875rem;
-		color: #999;
-	}
-
-	@media (max-width: 768px) {
-		h1 {
-			font-size: 2rem;
-		}
-
-		header p {
-			font-size: 1rem;
-		}
+	/* Ensure the layout doesn't add extra padding */
+	:global(.layout-content) {
+		padding: 0;
+		margin: 0;
 	}
 </style>
