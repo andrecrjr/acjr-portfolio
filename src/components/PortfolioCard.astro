@@ -1,0 +1,92 @@
+---
+import { notionService, type NotionPage } from "../lib/notion.ts";
+import "../styles/tokens.css";
+import "../styles/components/portfolio-card.css";
+
+export interface Props {
+    pageSize?: number;
+    filter?: any;
+}
+
+const {
+    pageSize = 10,
+    filter = undefined,
+} = Astro.props;
+
+// Fetch data server-side
+let portfolioItems: NotionPage[] = [];
+let error: string | null = null;
+
+try {
+    if (filter) {
+        portfolioItems = await notionService.getPagesByFilter(filter, pageSize);
+    } else {
+        portfolioItems = await notionService.getPages(pageSize);
+    }
+} catch (err) {
+    console.error("Failed to fetch portfolio items:", err);
+    error = "Failed to load portfolio items. Please check your Notion configuration.";
+}
+---
+
+<div class="portfolio-container">
+    <!-- Header Section -->
+    <header class="portfolio-header">
+        <div class="brand-container">
+            <h1 class="brand-title">ACJRHUB</h1>
+        </div>
+        <div class="profile-circle"></div>
+        <h2 class="role-title">Front-End Software Engineer</h2>
+    </header>
+
+    <!-- Portfolio Grid -->
+    <main class="portfolio-main">
+        {
+            error ? (
+                <div class="error-message">
+                    <p>{error}</p>
+                </div>
+            ) : portfolioItems.length === 0 ? (
+                <div class="empty-state">
+                    <p>No portfolio items found.</p>
+                </div>
+            ) : (
+                <div class="portfolio-grid">
+                    {portfolioItems.map((item) => (
+                        <article class="portfolio-card">
+                            <div class="card-content">
+                                <h3 class="project-title">
+                                    {item.url ? (
+                                        <a
+                                            href={item.url}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                        >
+                                            {item.title}
+                                        </a>
+                                    ) : (
+                                        item.title
+                                    )}
+                                </h3>
+                                
+                                {item.description && (
+                                    <p class="project-description">
+                                        {item.description}
+                                    </p>
+                                )}
+                                
+                                {item.tags && item.tags.length > 0 && (
+                                    <div class="tech-tags">
+                                        {item.tags.map((tag) => (
+                                            <span class="tech-tag">{tag}</span>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+                        </article>
+                    ))}
+                </div>
+            )
+        }
+    </main>
+</div>
