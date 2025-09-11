@@ -3,7 +3,8 @@ import { defineConfig } from 'astro/config';
 import node from '@astrojs/node';
 
 export default defineConfig({
-    site: 'https://acjr.dev', // Replace with your actual domain
+    output: 'server',
+    site: 'https://acjr.com', // Replace with your actual domain
     adapter: node({
         mode: 'standalone',
         experimentalStaticHeaders: true,
