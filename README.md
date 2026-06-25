@@ -1,48 +1,52 @@
-# Astro Starter Kit: Basics
+# ACJR Portfolio
+
+Astro portfolio for André Carlos Junior. The site renders a compact profile page and pulls project cards from a Notion database at request time.
+
+## Stack
+
+- Astro server output with the Node adapter
+- Notion API for portfolio content
+- CSS custom properties for design tokens and component styling
+
+## Setup
+
+Install dependencies:
 
 ```sh
-npm create astro@latest -- --template basics
+pnpm install
+# or
+bun install
 ```
 
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/basics)
-[![Open with CodeSandbox](https://assets.codesandbox.io/github/button-edit-lime.svg)](https://codesandbox.io/p/sandbox/github/withastro/astro/tree/latest/examples/basics)
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/withastro/astro?devcontainer_path=.devcontainer/basics/devcontainer.json)
+Create `.env` from `env.example` and set:
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
-
-![just-the-basics](https://github.com/withastro/astro/assets/2244813/a0a5533c-a856-4198-8470-2d67b1d7c554)
-
-## 🚀 Project Structure
-
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src/
-│   ├── layouts/
-│   │   └── Layout.astro
-│   └── pages/
-│       └── index.astro
-└── package.json
+```sh
+NOTION_TOKEN=your_notion_integration_token
+NOTION_DATABASE_ID=your_notion_database_id
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+The app also supports the older aliases `NOTION_API_KEY` and `NOTION_DATABASE_KEY`.
 
-## 🧞 Commands
+## Commands
 
-All commands are run from the root of the project, from a terminal:
+```sh
+pnpm run dev
+pnpm run build
+pnpm run preview
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+bun run dev
+bun run build
+bun run preview
+```
 
-## 👀 Want to learn more?
+## Notion Content
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+The portfolio reads common Notion property types automatically:
+
+- Title property for the project name
+- Rich text property for the description
+- Select property for status
+- Multi-select property for tags
+- URL property for the project link
+
+If Notion is not configured, the page still renders with a clear empty state.

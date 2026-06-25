@@ -4,89 +4,136 @@ import "../styles/tokens.css";
 import "../styles/components/portfolio-card.css";
 
 export interface Props {
-    pageSize?: number;
-    filter?: any;
+	pageSize?: number;
+	filter?: any;
 }
 
-const {
-    pageSize = 10,
-    filter = undefined,
-} = Astro.props;
+const { pageSize = 10, filter = undefined } = Astro.props;
 
-// Fetch data server-side
 let portfolioItems: NotionPage[] = [];
 let error: string | null = null;
 
 try {
-    if (filter) {
-        portfolioItems = await notionService.getPagesByFilter(filter, pageSize);
-    } else {
-        portfolioItems = await notionService.getPages(pageSize);
-    }
+	portfolioItems = filter
+		? await notionService.getPagesByFilter(filter, pageSize)
+		: await notionService.getPages(pageSize);
 } catch (err) {
-    console.error("Failed to fetch portfolio items:", err);
-    error = "Failed to load portfolio items. Please check your Notion configuration.";
+	console.error("Failed to fetch portfolio items:", err);
+	error = "Portfolio projects are temporarily unavailable.";
 }
+
+const configured = notionService.isConfigured();
+const projectCount = portfolioItems.length;
 ---
 
 <div class="portfolio-container">
-    <!-- Header Section -->
-    <header class="portfolio-header">
-        <div class="brand-container">
-            <h1 class="brand-title">ACJRHUB</h1>
-        </div>
-        <div class="profile-circle"></div>
-        <h2 class="role-title">Front-End Software Engineer</h2>
-    </header>
+	<header class="portfolio-header">
+		<a class="brand-mark" href="/" aria-label="ACJR Hub home">
+			<span aria-hidden="true">AC</span>
+		</a>
 
-    <!-- Portfolio Grid -->
-    <main class="portfolio-main">
-        {
-            error ? (
-                <div class="error-message">
-                    <p>{error}</p>
-                </div>
-            ) : portfolioItems.length === 0 ? (
-                <div class="empty-state">
-                    <p>No portfolio items found.</p>
-                </div>
-            ) : (
-                <div class="portfolio-grid">
-                    {portfolioItems.map((item) => (
-                        <article class="portfolio-card">
-                            <div class="card-content">
-                                <h3 class="project-title">
-                                    {item.url ? (
-                                        <a
-                                            href={item.url}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                        >
-                                            {item.title}
-                                        </a>
-                                    ) : (
-                                        item.title
-                                    )}
-                                </h3>
-                                
-                                {item.description && (
-                                    <p class="project-description">
-                                        {item.description}
-                                    </p>
-                                )}
-                                
-                                {item.tags && item.tags.length > 0 && (
-                                    <div class="tech-tags">
-                                        {item.tags.map((tag) => (
-                                            <span class="tech-tag">{tag}</span>
-                                        ))}
-                                    </div>
-                                )}
-                            </div>
-                        </article>
-                    ))}
-                </div>
-            )
-        }
-    </main>
+		<div class="intro-copy">
+			<p class="eyebrow">ACJR Hub</p>
+			<h1>André Carlos Junior</h1>
+			<p class="role-title">
+				Front End Engineer, React, Typescript, Software Engineer and AI Engineer
+			</p>
+		</div>
+
+		<nav class="profile-links" aria-label="Profile links">
+			<a href="https://github.com/andrecrjr" target="_blank" rel="noopener noreferrer">
+				GitHub
+			</a>
+			<a href="https://linkedin.com/in/andrecrjr" target="_blank" rel="noopener noreferrer">
+				LinkedIn
+			</a>
+			<a href="mailto:andre@ac-jr.com">Email</a>
+		</nav>
+	</header>
+
+	<section class="portfolio-summary" aria-label="Portfolio summary">
+		<div>
+			<span class="summary-value">{projectCount || "Live"}</span>
+			<span class="summary-label">{projectCount === 1 ? "project" : "projects"}</span>
+		</div>
+		<div>
+			<span class="summary-value">SSR</span>
+			<span class="summary-label">Astro + Notion</span>
+		</div>
+		<div>
+			<span class="summary-value">FE</span>
+			<span class="summary-label">UI engineering</span>
+		</div>
+	</section>
+
+	<main class="portfolio-main" aria-labelledby="work-heading">
+		<div class="section-heading">
+			<p class="eyebrow">Selected work</p>
+			<h2 id="work-heading">Projects and experiments</h2>
+		</div>
+
+		{
+			error ? (
+				<div class="state-message state-message-error" role="status">
+					<p>{error}</p>
+				</div>
+			) : portfolioItems.length === 0 ? (
+				<div class="state-message" role="status">
+					<p>
+						{configured
+							? "No portfolio items found in Notion yet."
+							: "Connect a Notion database to publish projects here."}
+					</p>
+				</div>
+			) : (
+				<div class="portfolio-grid">
+					{portfolioItems.map((item) => (
+						<article class="portfolio-card">
+							<div class="card-content">
+								<div class="card-header">
+									<h3 class="project-title">
+										{item.url ? (
+											<a
+												href={item.url}
+												target="_blank"
+												rel="noopener noreferrer"
+											>
+												{item.title}
+											</a>
+										) : (
+											item.title
+										)}
+									</h3>
+
+									{item.status && (
+										<span class="project-status">{item.status}</span>
+									)}
+								</div>
+
+								{item.description && (
+									<p class="project-description">{item.description}</p>
+								)}
+
+								{item.tags && item.tags.length > 0 && (
+									<ul class="tech-tags" aria-label={`${item.title} technologies`}>
+										{item.tags.map((tag) => (
+											<li class="tech-tag">{tag}</li>
+										))}
+									</ul>
+								)}
+
+								<time class="project-date" datetime={item.lastEditedTime}>
+									Updated {new Date(item.lastEditedTime).toLocaleDateString("en", {
+										month: "short",
+										day: "numeric",
+										year: "numeric",
+									})}
+								</time>
+							</div>
+						</article>
+					))}
+				</div>
+			)
+		}
+	</main>
 </div>

@@ -1,28 +1,31 @@
 /* Design Tokens - CSS Custom Properties */
 :root {
   /* Colors */
-  --color-primary: #37003a;
-  --color-accent: #c87a4c;
+  --color-primary: #141413;
+  --color-accent: #2f7d64;
+  --color-accent-strong: #e0573f;
   --color-white: #ffffff;
   --color-black: #000000;
   
   /* Color Variations */
-  --color-accent-light: #d4926b;
-  --color-accent-dark: #a6633d;
-  --color-primary-light: #4a0049;
-  --color-primary-dark: #24002b;
+  --color-accent-light: #7fc1aa;
+  --color-accent-dark: #215845;
+  --color-primary-light: #242321;
+  --color-primary-dark: #0c0c0b;
   
   /* Semantic Colors */
-  --color-surface: var(--color-white);
-  --color-background: var(--color-primary);
+  --color-surface: #f8f5ef;
+  --color-surface-muted: #eee7dc;
+  --color-background: #11110f;
   --color-text-primary: var(--color-white);
-  --color-text-secondary: rgba(255, 255, 255, 0.8);
-  --color-text-muted: rgba(255, 255, 255, 0.6);
+  --color-text-secondary: rgba(255, 255, 255, 0.78);
+  --color-text-muted: rgba(255, 255, 255, 0.58);
+  --color-ink: #161615;
   
   /* Interactive States */
   --color-hover-overlay: rgba(255, 255, 255, 0.1);
   --color-active-overlay: rgba(255, 255, 255, 0.2);
-  --color-focus-ring: rgba(255, 255, 255, 0.5);
+  --color-focus-ring: #7fc1aa;
   
   /* Typography */
   --font-family-primary: 'Anonymous Pro', 'Courier New', monospace;
@@ -33,14 +36,14 @@
   --font-weight-bold: 700;
   
   /* Font Sizes - Fluid Typography */
-  --font-size-xs: clamp(0.75rem, 1.5vw, 0.875rem);
-  --font-size-sm: clamp(0.875rem, 2vw, 1rem);
-  --font-size-base: clamp(1rem, 2.5vw, 1.125rem);
-  --font-size-lg: clamp(1.125rem, 3vw, 1.25rem);
-  --font-size-xl: clamp(1.25rem, 3.5vw, 1.5rem);
-  --font-size-2xl: clamp(1.5rem, 4vw, 2rem);
-  --font-size-3xl: clamp(1.875rem, 4.5vw, 2.25rem);
-  --font-size-4xl: clamp(2.25rem, 5vw, 3rem);
+  --font-size-xs: 0.75rem;
+  --font-size-sm: 0.875rem;
+  --font-size-base: 1rem;
+  --font-size-lg: 1.125rem;
+  --font-size-xl: 1.375rem;
+  --font-size-2xl: 1.75rem;
+  --font-size-3xl: 2.25rem;
+  --font-size-4xl: 3rem;
   
   /* Line Heights */
   --line-height-tight: 1.1;
@@ -65,11 +68,11 @@
   --space-card: clamp(1.5rem, 4vw, 3rem);
   
   /* Border Radius */
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
-  --radius-2xl: 32px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
+  --radius-xl: 8px;
+  --radius-2xl: 8px;
   --radius-full: 9999px;
   
   /* Shadows */
@@ -80,9 +83,9 @@
   --shadow-2xl: 0 25px 50px rgba(0, 0, 0, 0.25);
   
   /* Custom Shadows */
-  --shadow-card: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  --shadow-card-hover: 0px 8px 16px rgba(0, 0, 0, 0.35);
-  --shadow-card-focus: 0px 12px 24px rgba(0, 0, 0, 0.4);
+  --shadow-card: 0 12px 30px rgba(0, 0, 0, 0.16);
+  --shadow-card-hover: 0 18px 42px rgba(0, 0, 0, 0.22);
+  --shadow-card-focus: 0 0 0 4px rgba(127, 193, 170, 0.2);
   
   /* Transitions */
   --transition-fast: 150ms ease;

@@ -1,8 +1,11 @@
 import { Client } from '@notionhq/client';
 
-// Initialize Notion client
+const notionApiKey = import.meta.env.NOTION_API_KEY || import.meta.env.NOTION_TOKEN;
+const notionDatabaseId =
+    import.meta.env.NOTION_DATABASE_KEY || import.meta.env.NOTION_DATABASE_ID;
+
 const notion = new Client({
-    auth: import.meta.env.NOTION_API_KEY,
+    auth: notionApiKey,
 });
 
 export interface NotionPage {
@@ -14,20 +17,28 @@ export interface NotionPage {
     url?: string;
     createdTime: string;
     lastEditedTime: string;
-    [key: string]: any;
+    properties?: Record<string, unknown>;
 }
 
 export class NotionService {
-    private databaseId: string;
+    private databaseId?: string;
 
     constructor(databaseId?: string) {
-        this.databaseId = databaseId || import.meta.env.NOTION_DATABASE_KEY;
+        this.databaseId = databaseId || notionDatabaseId;
+    }
+
+    isConfigured(): boolean {
+        return Boolean(notionApiKey && this.databaseId);
     }
 
     async getPages(pageSize = 10): Promise<NotionPage[]> {
+        if (!this.isConfigured()) {
+            return [];
+        }
+
         try {
             const response = await notion.databases.query({
-                database_id: this.databaseId,
+                database_id: this.databaseId!,
                 page_size: pageSize,
                 sorts: [
                     {
@@ -45,9 +56,13 @@ export class NotionService {
     }
 
     async getPagesByFilter(filter: any, pageSize = 10): Promise<NotionPage[]> {
+        if (!this.isConfigured()) {
+            return [];
+        }
+
         try {
             const response = await notion.databases.query({
-                database_id: this.databaseId,
+                database_id: this.databaseId!,
                 filter,
                 page_size: pageSize,
                 sorts: [
